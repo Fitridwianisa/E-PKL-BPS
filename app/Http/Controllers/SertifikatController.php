@@ -50,8 +50,8 @@ class SertifikatController extends Controller
         if (!$pendaftaran || now()->lt($pendaftaran->tanggal_selesai)) {
             return redirect()->back()->with('error', 'Sertifikat belum tersedia.');
         }
-
-        \Carbon\Carbon::setLocale('id');
+        
+        Carbon::setLocale('id');
 
         // Cek sertifikat
         $sertifikat = Sertifikat::firstOrCreate(
@@ -127,14 +127,77 @@ class SertifikatController extends Controller
     {
         $bulan = now()->format('m');
 
-        // Hitung total sertifikat + 1
-        $count = Sertifikat::count() + 1;
+        // Ambil nomor sertifikat terakhir
+        $last = Sertifikat::orderBy('id', 'desc')->first();
 
-        // Format jadi 3 digit (001, 002, dst)
-        $noUrut = str_pad($count, 3, '0', STR_PAD_LEFT);
+        if ($last) {
+            // Ambil nomor urut dari string, contoh "004/3506/HM.340/08/2025" → 004
+            $lastNo = intval(substr($last->nomor_sertifikat, 0, 3));
+            $nextNo = $lastNo + 1;
+        } else {
+            $nextNo = 1;
+        }
 
-        // Susun format akhir
+        // Format jadi 3 digit
+        $noUrut = str_pad($nextNo, 3, '0', STR_PAD_LEFT);
+
         return "{$noUrut}/3506/HM.340/{$bulan}/2025";
+    }
+
+
+    // Admin preview sertifikat otomatis
+    public function previewAuto($userId)
+    {
+        $pendaftaran = PendaftaranMagang::where('user_id', $userId)->first();
+        $biodata = BiodataPeserta::where('user_id', $userId)->first();
+
+        if (!$pendaftaran) {
+            return back()->with('error', 'Data peserta belum lengkap.');
+        }
+
+        $sertifikat = Sertifikat::firstOrCreate(
+            ['user_id' => $userId],
+            ['nomor_sertifikat' => $this->generateNomorSertifikat()]
+        );
+
+        $data = [
+            'nama' => $biodata->nama,
+            'instansi' => $biodata->instansi,
+            'tanggal_mulai' => Carbon::parse($pendaftaran->tanggal_mulai)->translatedFormat('d F Y'),
+            'tanggal_selesai' => Carbon::parse($pendaftaran->tanggal_selesai)->translatedFormat('d F Y'),
+            'nomor_sertifikat' => $sertifikat->nomor_sertifikat,
+        ];
+
+        $pdf = PDF::loadView('pendaftar.sertifikat-pdf', $data);
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('preview-sertifikat.pdf');
+    }
+
+    // Admin download sertifikat otomatis
+    public function downloadAuto($userId)
+    {
+        // Sama persis dengan previewAuto(), tapi return download()
+        $pendaftaran = PendaftaranMagang::where('user_id', $userId)->first();
+        $biodata = BiodataPeserta::where('user_id', $userId)->first();
+
+        $sertifikat = Sertifikat::firstOrCreate(
+            ['user_id' => $userId],
+            ['nomor_sertifikat' => $this->generateNomorSertifikat()]
+        );
+
+        $data = [
+            'nama' => $biodata->nama,
+            'instansi' => $biodata->instansi,
+            'tanggal_mulai' => Carbon::parse($pendaftaran->tanggal_mulai)->translatedFormat('d F Y'),
+            'tanggal_selesai' => Carbon::parse($pendaftaran->tanggal_selesai)->translatedFormat('d F Y'),
+            'nomor_sertifikat' => $sertifikat->nomor_sertifikat,
+        ];
+
+        $pdf = PDF::loadView('pendaftar.sertifikat-pdf', $data);
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download('sertifikat_' . Str::slug($data['nama']) . '.pdf');
     }
 
 

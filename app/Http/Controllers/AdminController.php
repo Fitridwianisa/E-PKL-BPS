@@ -64,23 +64,58 @@ class AdminController extends Controller
         return back()->with('success', $message);
     }
 
-    public function pendaftaran()
+    public function pendaftaran(Request $request)
     {
-        $pendaftarans = PendaftaranMagang::with('user')
-            ->orderBy('created_at', 'asc') // Tanggal terlama
-            ->paginate(10); // Pagination
+        $query = PendaftaranMagang::with(['user', 'biodata'])
+                    ->orderBy('created_at', 'asc'); // Tanggal terlama
+
+        // Tambahkan pencarian jika ada
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function($q2) use ($search) {
+                    $q2->where('nama', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+                })
+                ->orWhereHas('biodata', function($q2) use ($search) {
+                    $q2->where('instansi', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        $pendaftarans = $query->paginate(10)->withQueryString();
 
         return view('admin.pendaftaran', compact('pendaftarans'));
     }
 
-    public function peserta()
-    {
-        $pendaftarans = PendaftaranMagang::with('user')
-            ->orderBy('created_at', 'asc') // Tanggal terlama
-            ->paginate(10); // Pagination
 
-        return view('admin.peserta', compact('pendaftarans'));
+    public function peserta(Request $request)
+    {
+        $query = PendaftaranMagang::with(['user', 'biodata'])
+            ->where('status', 'diterima'); // Hanya yang diterima
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function($q2) use ($search) {
+                    $q2->where('nama', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+                })
+                ->orWhereHas('biodata', function($q2) use ($search) {
+                    $q2->where('instansi', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        $pendaftarans = $query->orderBy('created_at', 'asc')
+                            ->paginate(10)
+                            ->withQueryString();
+
+        $totalDiterima = PendaftaranMagang::where('status', 'diterima')->count();
+
+        return view('admin.peserta', compact('pendaftarans', 'totalDiterima'));
     }
+
 
     public function showPeserta($id)
     {

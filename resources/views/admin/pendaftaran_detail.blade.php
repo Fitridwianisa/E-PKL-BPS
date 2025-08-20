@@ -10,8 +10,6 @@
 
         <!-- Detail Pelamar -->
         <div class="col-md-6">
-            <h5 class="mb-3"><strong>{{ strtoupper($pendaftaran->user->name) }}</strong></h5>
-            <p class="text-muted">{{ $pendaftaran->user->biodata->asal_instansi ?? '-' }} / {{ $pendaftaran->user->biodata->jurusan ?? '-' }}</p>
 
             <table class="table table-borderless">
                 <tr>
@@ -54,12 +52,13 @@
                             <a href="{{ asset('storage/' . $sb->file) }}" target="_blank">Lihat Surat Balasan</a><br>
                         @endforeach
 
-                        <form action="{{ route('admin.suratbalasan.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.suratbalasan.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return confirmUpload(this)">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ $pendaftaran->user_id }}">
                             <input type="file" name="file" class="form-control mt-2 mb-2" required>
-                            <button class="btn btn-primary btn-sm">Unggah</button>
+                            <button class="btn btn-primary btn-sm me-2">Unggah</button>
                         </form>
+
                     </td>
                 </tr>
                 @endif
@@ -99,7 +98,7 @@
             reverseButtons: true,
             customClass: {
                 confirmButton: 'btn btn-success me-2',
-                cancelButton: 'btn btn-secondary'
+                cancelButton: 'btn btn-secondary me-2'
             },
             buttonsStyling: false
         }).then((result) => {
@@ -120,6 +119,32 @@
         showConfirmButton: false
     });
     @endif
+
+    function confirmUpload(form) {
+    event.preventDefault();
+
+    Swal.fire({
+        title: 'Yakin ingin mengunggah surat balasan ini?',
+        text: "Jika sudah ada file sebelumnya, akan diganti dengan yang baru.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, unggah',
+        cancelButtonText: 'Batal',
+        reverseButtons: true,
+        customClass: {
+            confirmButton: 'btn btn-success me-2',
+            cancelButton: 'btn btn-secondary me-2'
+        },
+        buttonsStyling: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+    });
+
+    return false;
+}
+
 </script>
 @endpush
 

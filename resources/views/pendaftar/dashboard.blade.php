@@ -8,14 +8,6 @@
             <h5 class="fw-bold">Lihat status penerimaan kamu</h5>
             <small class="text-primary">List terbaru berdasarkan tanggal apply</small>
         </div>
-        <div>
-            <div class="input-group" style="max-width: 250px;">
-                <input type="text" class="form-control" placeholder="Cari">
-                <span class="input-group-text bg-white">
-                    <i class="bi bi-funnel"></i>
-                </span>
-            </div>
-        </div>
     </div>
 
     <div class="table-responsive">
@@ -33,7 +25,7 @@
                 <tbody>
                     @foreach($pendaftaran as $item)
                         <tr>
-                            <td>{{ $item->id ?? '-' }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->bagian_penempatan ?? '-' }}</td>
                             <td>{{ $item->tanggal_mulai  }}</td>
                             <td>
@@ -41,6 +33,8 @@
                                     <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">Ditolak</span>
                                 @elseif ($item->status == 'diterima')
                                     <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">Diterima</span>
+                                @elseif ($item->status == 'selesai')
+                                    <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">Selesai</span>
                                 @else
                                     <span class="badge bg-warning-subtle text-warning px-3 py-2 rounded-pill">Menunggu</span>
                                 @endif
@@ -66,7 +60,7 @@
             <p class="text-muted">Belum ada data pendaftaran.</p>
         @endif
     </div>
-    <small>Informasi Lebih lanjut hubungi : *</small>
+    <small>Informasi Lebih lanjut hubungi SI DILAN: 0815-5323-3444</small>
 @endsection
 @section('scripts')
     <script>

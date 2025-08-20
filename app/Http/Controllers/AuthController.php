@@ -95,4 +95,52 @@ class AuthController extends Controller
         return view('profile.index', compact('profil')); // Kirim ke view
     }
 
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6|confirmed'
+        ]);
+
+        // Update email (username)
+        $user->email = $request->email;
+
+        // Kalau password diisi, update password juga
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui.');
+    }
+
+        // Tampilkan semua pengguna
+    public function index()
+    {
+        $pengguna = User::all();
+        return view('admin.pengguna', compact('pengguna'));
+    }
+
+    // Simpan pengguna baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'role' => 'required|in:admin,peserta'
+        ]);
+
+        User::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role
+        ]);
+
+        return redirect()->route('admin.pengguna')->with('success', 'Pengguna berhasil ditambahkan.');
+    }
 }

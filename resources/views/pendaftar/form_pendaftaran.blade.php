@@ -31,7 +31,7 @@
             <input type="text" name="no_wa" class="form-control" required value="{{ old('no_wa', $biodata->no_wa ?? '') }}">
         </div>
         <div class="mb-3">
-            <label>Foto (PNG/JPG) <span class="text-danger">*</span></label>
+            <label>Foto 3:4 (PNG/JPG) <span class="text-danger">*</span></label>
             <input type="file" name="foto" class="form-control" accept="image/png, image/jpeg" onchange="previewFoto(event)">
             <img id="preview" src="{{ $biodata && $biodata->foto ? asset('storage/'.$biodata->foto) : '' }}" alt="Preview Foto" class="img-thumbnail mt-2" style="max-height: 150px;">
         </div>
@@ -65,26 +65,26 @@
             </select>
         </div>
         <div class="mb-3">
-            <label>Tanggal Mulai<span class="text-danger">*</span></label>
+            <label>Tanggal Mulai (bulan/hari/tahun)<span class="text-danger">*</span></label>
             <input type="date" name="tanggal_mulai" class="form-control" required value="{{ old('tanggal_mulai') }}">
         </div>
         <div class="mb-3">
-            <label>Tanggal Selesai<span class="text-danger">*</span></label>
+            <label>Tanggal Selesai (bulan/hari/tahun)<span class="text-danger">*</span></label>
             <input type="date" name="tanggal_selesai" class="form-control" required value="{{ old('tanggal_selesai') }}">
         </div>
         <div class="mb-3">
             <label>Bagian Penempatan<span class="text-danger">*</span></label>
-            <select name="bagian_penempatan" class="form-control" required>
-                <option value="">-- Pilih bagian --</option>
-                <option value="umum" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>Umum </option>
-                <option value="humas" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>Humas, Pojok Statistik, PSS</option>
-                <option value="ipds" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>IPDS </option>
-                <option value="statistik_sosial" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>Statistik sosial</option>
-                <option value="statistik_distribusi" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>Statistik distribusi</option>
-                <option value="statistik_produksi" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>Statistik produksi</option>
-                <option value="newilis" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>Newilis</option>
-                <option value="sakip" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>SAKIP, ZI, EPSS</option>
-            </select>
+                <select name="bagian_penempatan" class="form-control" required>
+                    <option value="" {{ old('bagian_penempatan') == '' ? 'selected' : '' }}>-- Pilih bagian --</option>
+                    <option value="umum" {{ old('bagian_penempatan') == 'umum' ? 'selected' : '' }}>Umum</option>
+                    <option value="humas" {{ old('bagian_penempatan') == 'humas' ? 'selected' : '' }}>Humas, Pojok Statistik, PSS</option>
+                    <option value="ipds" {{ old('bagian_penempatan') == 'ipds' ? 'selected' : '' }}>IPDS</option>
+                    <option value="statistik_sosial" {{ old('bagian_penempatan') == 'statistik_sosial' ? 'selected' : '' }}>Statistik sosial</option>
+                    <option value="statistik_distribusi" {{ old('bagian_penempatan') == 'statistik_distribusi' ? 'selected' : '' }}>Statistik distribusi</option>
+                    <option value="statistik_produksi" {{ old('bagian_penempatan') == 'statistik_produksi' ? 'selected' : '' }}>Statistik produksi</option>
+                    <option value="newilis" {{ old('bagian_penempatan') == 'newilis' ? 'selected' : '' }}>Newilis</option>
+                    <option value="sakip" {{ old('bagian_penempatan') == 'sakip' ? 'selected' : '' }}>SAKIP, ZI, EPSS</option>
+                </select>
         </div>
         <small class="form-text text-muted">
             <strong>*SAKIP</strong>: Sistem Akuntabilitas Kinerja Instansi Pemerintah,<br>

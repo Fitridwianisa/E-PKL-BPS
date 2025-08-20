@@ -24,6 +24,9 @@ Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/profile', [AuthController::class, 'profile'])->name('profile.index');
+// web.php
+Route::put('/profile/update', [AuthController::class, 'update'])->name('profile.update');
+
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
@@ -45,6 +48,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/pendaftaran/store-biodata', [PendaftarController::class, 'storeBiodata'])->name('pendaftaran.store.biodata');
         Route::post('/pendaftaran/store-pendaftaran', [PendaftarController::class, 'storePendaftaran'])->name('pendaftaran.store.pendaftaran');
+
+        Route::get('/pendaftar/sertifikat', [SertifikatController::class, 'sertifikat'])->name('pendaftar.sertifikat');
+        Route::get('/sertifikat/download', [SertifikatController::class, 'download'])->name('sertifikat.download');
+        Route::get('/sertifikat/preview', [SertifikatController::class, 'preview'])->name('sertifikat.preview');
     });
 });
 
@@ -75,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/admin/pendaftaran/{id}/peserta', [AdminController::class, 'showPeserta'])->name('admin.pendaftaran.showpeserta');
 
+        Route::get('/admin/pengguna', [AuthController::class, 'index'])->name('admin.pengguna');
+        Route::post('/admin/pengguna', [AuthController::class, 'store'])->name('admin.pengguna.store');
     });
 });
 
@@ -82,9 +91,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::post('/sertifikat/upload/{user}', [SertifikatController::class, 'upload'])->name('admin.upload_sertifikat');
 });
 
-Route::get('/pendaftar/sertifikat', [SertifikatController::class, 'sertifikat'])->name('pendaftar.sertifikat');
-Route::get('/sertifikat/download', [SertifikatController::class, 'download'])->name('sertifikat.download');
-Route::get('/sertifikat/preview', [SertifikatController::class, 'preview'])->name('sertifikat.preview');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/sertifikat/preview-auto/{user}', [SertifikatController::class, 'previewAuto'])
+        ->name('admin.sertifikat.preview.auto');
+
+    Route::get('/sertifikat/download-auto/{user}', [SertifikatController::class, 'downloadAuto'])
+        ->name('admin.sertifikat.download.auto');
+});
+
 
 // Umum (bisa diakses siapa saja)
 Route::get('/artikel/{id}/index', action: [ArtikelController::class, 'ShowArtikel'])->name('artikel.index');

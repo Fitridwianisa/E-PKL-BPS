@@ -25,19 +25,17 @@
     </form>
 
     <hr>
+    <h4 class="fw-bold mb-4">Unduh Sertifikat</h4>
 
-    {{-- Tombol Preview Sertifikat --}}
-    <<hr>
+        <a href="{{ route('admin.sertifikat.preview.auto', $user->id) }}" target="_blank" class="btn btn-outline-primary me-2">
+            Preview Sertifikat Auto
+        </a>
 
-    {{-- Tombol Preview Sertifikat --}}
-    <a href="{{ route('sertifikat.preview') }}" target="_blank" class="btn btn-outline-primary me-2">
-        Preview Sertifikat
-    </a>
+        {{-- Tombol Download Sertifikat Auto --}}
+        <a href="{{ route('admin.sertifikat.download.auto', $user->id) }}" class="btn btn-dark">
+            Download Sertifikat Auto
+        </a>
 
-    {{-- Tombol Download Sertifikat --}}
-    <a href="{{ route('sertifikat.download') }}" class="btn btn-dark">
-        Download Sertifikat
-    </a>
 
 
     {{-- Area Preview Sertifikat --}}

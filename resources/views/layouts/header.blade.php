@@ -1,5 +1,4 @@
-
-<nav class="navbar navbar-expand-lg navbar-custom px-4">
+<nav class="navbar navbar-expand-lg navbar-custom px-4 fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="#">
             <img src="{{ asset('img/logo-bps.png') }}" alt="Logo BPS" height="40" class="me-2">
@@ -16,22 +15,14 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarBPS">
             <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
 
-                {{-- Lokasi tetap tampil untuk semua --}}
+                {{-- Lokasi --}}
                 <li class="nav-item mx-2">
-                    <a 
-                        class="nav-link text-white" 
-                        href="https://www.google.com/maps?q=Badan+Pusat+Statistik+Kabupaten+Kediri" 
-                        target="_blank" 
-                        title="Lihat lokasi BPS Kabupaten Kediri"
-                    >
-                        <img 
-                            src="https://img.icons8.com/ios-filled/24/ffffff/marker.png" 
-                            alt="Lokasi"
-                        />
+                    <a class="nav-link text-white" href="https://www.google.com/maps?q=Badan+Pusat+Statistik+Kabupaten+Kediri" target="_blank" title="Lihat lokasi BPS Kabupaten Kediri">
+                        <img src="https://img.icons8.com/ios-filled/24/ffffff/marker.png" alt="Lokasi"/>
                     </a>
                 </li>
 
-                {{-- Jika belum login --}}
+                {{-- Belum login --}}
                 @guest
                     <li>
                         <a href="{{ route('login') }}">
@@ -40,7 +31,7 @@
                     </li>
                 @endguest
 
-                {{-- Jika sudah login --}}
+                {{-- Sudah login --}}
                 @auth
                     <li class="nav-item dropdown mx-2">
                         <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

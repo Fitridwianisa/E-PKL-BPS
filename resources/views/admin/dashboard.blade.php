@@ -5,49 +5,51 @@
     .stat-card {
         background: #fff;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-radius: 15px;
-        padding: 20px;
+        border-radius: 12px;
+        padding: 15px;
         transition: 0.3s ease-in-out;
     }
 
     .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.15);
     }
 
     .stat-number {
-        font-size: 2.5rem;
+        font-size: 1.8rem;   /* lebih kecil */
         font-weight: bold;
         color: #333;
     }
 
     .stat-label {
-        margin-top: 8px;
-        font-size: 1rem;
+        margin-top: 6px;
+        font-size: 0.9rem;
         color: #777;
+        line-height: 1.3;
     }
 
     .chart-container {
         background: #fff;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-radius: 15px;
-        padding: 20px;
-        margin-top: 30px;
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 20px;
     }
 
     .chart-title {
         font-weight: bold;
-        margin-bottom: 10px;
+        font-size: 1rem;
+        margin-bottom: 8px;
     }
 
     .row {
-        gap: 20px;
+        gap: 15px;
         justify-content: center;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 </style>
 
-<div class="container my-5">
+<div class="container my-4">
     <div class="row text-center">
         <div class="col-md-3 stat-card">
             <div class="stat-number">{{ number_format($belumDikonfirmasi) }}</div>
@@ -66,11 +68,7 @@
     <div class="row">
         <div class="col-md-8 chart-container">
             <h5 class="chart-title">Grafik Pendaftaran per Bulan</h5>
-            <canvas id="barChart" height="150"></canvas>
-        </div>
-        <div class="col-md-4 chart-container">
-            <h5 class="chart-title">Komposisi Status</h5>
-            <canvas id="pieChart" height="200"></canvas>
+            <canvas id="barChart" height="100"></canvas> {{-- kecilin --}}
         </div>
     </div>
 </div>

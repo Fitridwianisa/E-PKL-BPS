@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PendaftaranMagang;
 use App\Models\BiodataPeserta;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PendaftarController extends Controller
 {
@@ -15,9 +16,16 @@ class PendaftarController extends Controller
             ->where('user_id', Auth::id())
             ->get();
 
+        foreach ($pendaftaran as $data) {
+            $tanggalSelesaiPlus1 = Carbon::parse($data->tanggal_selesai)->addDay();
+
+            if (Carbon::now()->greaterThanOrEqualTo($tanggalSelesaiPlus1) && $data->status !== 'selesai') {
+                $data->update(['status' => 'selesai']);
+            }
+        }
+
         return view('pendaftar.dashboard', compact('pendaftaran'));
     }
-
 
     public function profile()
     {
@@ -29,6 +37,7 @@ class PendaftarController extends Controller
         $biodata = BiodataPeserta::where('user_id', Auth::id())->first();
         return view('pendaftar.form_pendaftaran', compact('biodata'));
     }
+
     public function create()
     {
         return view('pendaftaran.create');
@@ -96,5 +105,4 @@ class PendaftarController extends Controller
 
         return redirect()->route('pendaftar.dashboard')->with('success', 'Pengajuan berhasil dikirim!');
     }
-
 }
