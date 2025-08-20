@@ -18,7 +18,6 @@ class AdminController extends Controller
         $diterima = PendaftaranMagang::where('status', 'diterima')->count();
         $ditolak = PendaftaranMagang::where('status', 'ditolak')->count();
 
-        // Total peserta untuk pie chart
         $totalPeserta = PendaftaranMagang::count();
 
         // Statistik per bulan
@@ -31,14 +30,35 @@ class AdminController extends Controller
         ->orderBy('bulan')
         ->get();
 
+        // 🔹 Tambahan logika siswa vs mahasiswa
+        $jumlahSiswa = \DB::table('biodata_peserta')
+            ->where(function($q) {
+                $q->where('instansi', 'like', '%SMA%')
+                ->orWhere('instansi', 'like', '%SMK%')
+                ->orWhere('instansi', 'like', '%MA%');
+            })
+            ->count();
+
+        $jumlahMahasiswa = \DB::table('biodata_peserta')
+            ->where(function($q) {
+                $q->where('instansi', 'like', '%Universitas%')
+                ->orWhere('instansi', 'like', '%Institut%')
+                ->orWhere('instansi', 'like', '%Politeknik%')
+                ->orWhere('instansi', 'like', '%Sekolah Tinggi%');
+            })
+            ->count();
+
         return view('admin.dashboard', compact(
             'belumDikonfirmasi',
             'diterima',
             'ditolak',
             'totalPeserta',
-            'statistikPerBulan'
+            'statistikPerBulan',
+            'jumlahSiswa',
+            'jumlahMahasiswa'
         ));
     }
+
 
     public function showPendaftaran($id)
     {

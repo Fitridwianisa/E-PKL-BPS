@@ -9,6 +9,10 @@
     <style>
         .navbar-custom {
             background-color: #002B6B;
+            font-size: 0.9rem; 
+            line-height: 1.2; 
+            padding-top: 0.25rem;   /* kecilkan atas */
+            padding-bottom: 0.25rem;/* kecilkan bawah */
         }
 
         body {

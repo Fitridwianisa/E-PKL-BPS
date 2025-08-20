@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-custom px-4 fixed-top">
+<nav class="navbar navbar-expand-lg navbar-custom px-2 fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="{{ asset('img/logo-bps.png') }}" alt="Logo BPS" height="40" class="me-2">
+            <img src="{{ asset('img/logo-bps.png') }}" alt="Logo BPS" height="32" class="me-2">
             <span class="text-white fw-bold fst-italic">
                 BADAN PUSAT STATISTIK<br>
                 KABUPATEN KEDIRI

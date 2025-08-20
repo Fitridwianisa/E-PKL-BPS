@@ -48,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/pendaftaran/store-biodata', [PendaftarController::class, 'storeBiodata'])->name('pendaftaran.store.biodata');
         Route::post('/pendaftaran/store-pendaftaran', [PendaftarController::class, 'storePendaftaran'])->name('pendaftaran.store.pendaftaran');
+        Route::post('/pendaftaran/store-draft', [PendaftarController::class, 'storeDraft'])->name('pendaftaran.store.draft');
+        Route::post('/pendaftaran/submit-pendaftaran', [PendaftarController::class, 'submitPendaftaran'])->name('pendaftaran.submit');
 
         Route::get('/pendaftar/sertifikat', [SertifikatController::class, 'sertifikat'])->name('pendaftar.sertifikat');
         Route::get('/sertifikat/download', [SertifikatController::class, 'download'])->name('sertifikat.download');

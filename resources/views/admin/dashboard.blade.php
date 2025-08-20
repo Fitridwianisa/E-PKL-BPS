@@ -63,8 +63,15 @@
             <div class="stat-number">{{ $ditolak }}</div>
             <div class="stat-label">Pendaftar <br><strong>Pelamar ditolak</strong></div>
         </div>
+            <div class="col-md-3 stat-card">
+        <div class="stat-number">{{ $jumlahSiswa }}</div>
+        <div class="stat-label">Total Pendaftar <br><strong>Siswa</strong></div>
+        </div>
+        <div class="col-md-3 stat-card">
+            <div class="stat-number">{{ $jumlahMahasiswa }}</div>
+            <div class="stat-label">Total Pendaftar<br><strong>Mahasiswa</strong></div>
+        </div>
     </div>
-
     <div class="row">
         <div class="col-md-8 chart-container">
             <h5 class="chart-title">Grafik Pendaftaran per Bulan</h5>

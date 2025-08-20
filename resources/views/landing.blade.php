@@ -12,6 +12,10 @@
     
         .navbar-custom {
             background-color: #002B6B;
+            font-size: 0.9rem; 
+            line-height: 1.2; 
+            padding-top: 0.25rem;   /* kecilkan atas */
+            padding-bottom: 0.25rem;/* kecilkan bawah */
         }
 
         .hover-border {
@@ -19,7 +23,7 @@
         }
 
         body {
-            padding-top: 80px; /* tinggi navbar */
+            padding-top: 65px; /* tinggi navbar */
         }
 
         .hover-border:hover {
@@ -208,12 +212,26 @@
         <div id="alur" class="tab-content d-none">
             <h4 class="mb-4">Alur Pendaftaran</h4>
             <div class="timeline">
-                <div class="timeline-item left"><div class="timeline-content"><h5>Registrasi akun di WEB</h5></div></div>
+                <div class="timeline-item left"><div class="timeline-content"><h5>Registrasi akun di website</h5></div></div>
                 <div class="timeline-item right"><div class="timeline-content"><h5>Login</h5></div></div>
                 <div class="timeline-item left"><div class="timeline-content"><h5>Mengisi Biodata</h5></div></div>
                 <div class="timeline-item right"><div class="timeline-content"><h5>Mengisi Form Pendaftaran & Upload Surat Pengantar/Proposal</h5></div></div>
                 <div class="timeline-item left"><div class="timeline-content"><h5>Menunggu Disetujui</h5></div></div>
             </div>
+
+         <!-- Bagian Persyaratan -->
+        <h4 class="mt-5 mb-3">Persyaratan</h4>
+            <li class="list-group-item">Mahasiswa/siswa aktif di semua jurusan</li>
+            <li class="list-group-item">Mengisi form Pendaftaran</li>
+        </ul>
+
+        <!-- Tagar -->
+        <div class="mt-3">
+            <span class="badge bg-primary">#internship</span>
+            <span class="badge bg-success">#magang</span>
+            <span class="badge bg-info text-dark">#PKL</span>
+        </div>
+        <br>
         </div>
     </div>
 

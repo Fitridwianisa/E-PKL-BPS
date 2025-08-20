@@ -16,6 +16,7 @@ class PendaftarController extends Controller
             ->where('user_id', Auth::id())
             ->get();
 
+        // 🔹 Tambahkan logika untuk update status ke "selesai"
         foreach ($pendaftaran as $data) {
             $tanggalSelesaiPlus1 = Carbon::parse($data->tanggal_selesai)->addDay();
 
@@ -45,30 +46,22 @@ class PendaftarController extends Controller
 
     public function storeBiodata(Request $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'instansi' => 'required',
-            'jurusan' => 'required',
-            'nim_nis' => 'required',
-            'no_wa' => 'required',
-            'foto' => 'nullable|image|max:2048'
-        ]);
+        $data = [
+            'nama' => $request->nama,
+            'instansi' => $request->instansi,
+            'jurusan' => $request->jurusan,
+            'nim_nis' => $request->nim_nis,
+            'no_wa' => $request->no_wa,
+            'status' => $request->status,
+        ];
 
-        $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('foto_peserta', 'public');
+            $data['foto'] = $request->file('foto')->store('foto_peserta', 'public');
         }
 
         BiodataPeserta::updateOrCreate(
             ['user_id' => Auth::id()],
-            [
-                'nama' => $request->nama,
-                'instansi' => $request->instansi,
-                'jurusan' => $request->jurusan,
-                'nim_nis' => $request->nim_nis,
-                'no_wa' => $request->no_wa,
-                'foto' => $fotoPath
-            ]
+            $data
         );
 
         return back()->with('success', 'Biodata berhasil disimpan.');

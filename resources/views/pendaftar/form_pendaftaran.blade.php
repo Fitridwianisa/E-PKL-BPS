@@ -15,6 +15,14 @@
             <input type="text" name="nama" class="form-control" required value="{{ old('nama', $biodata->nama ?? '') }}">
         </div>
         <div class="mb-3">
+            <label>Status <span class="text-danger">*</span></label>
+            <select name="status" class="form-control" required>
+                <option value="">-- Pilih Status --</option>
+                <option value="siswa" {{ old('status', $biodata->status ?? '') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                <option value="mahasiswa" {{ old('status', $biodata->status ?? '') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+            </select>
+        </div>
+        <div class="mb-3">
             <label>Instansi / Sekolah <span class="text-danger">*</span></label>
             <input type="text" name="instansi" class="form-control" required value="{{ old('instansi', $biodata->instansi ?? '') }}">
         </div>
@@ -101,9 +109,6 @@
             <label class="form-check-label small text-muted" for="siapDitempatkan">
                 Saya bersedia ditempatkan di bidang lain sesuai keputusan BPS
             </label>
-        </div>
-        <div class="text-end">
-            <button type="submit" class="btn btn-primary">Kirim Pengajuan</button>
         </div>
     </form>
 </div>
