@@ -134,5 +134,5 @@ http://127.0.0.1:8000
 ---
 
 ## 9. ⚠️ Catatan Penting
-
+Jika sudah di seeder, maka kata sandi default untuk admin1@gmail.com = 12345678
 
